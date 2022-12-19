@@ -38,40 +38,40 @@ public class Startup {
         bank.name = "FPeople";
         bank.totalMoneyCount = rnd.nextDouble(1000000);
         bankService.addBank(bank);
-        initBankAtms(bank);
         initOffices(bank);
+        initBankAtms(bank);
         initClients(bank);
 
         bank = new Bank();
         bank.name = "Тенек";
         bank.totalMoneyCount = rnd.nextDouble(1000000);
         bankService.addBank(bank);
-        initBankAtms(bank);
         initOffices(bank);
+        initBankAtms(bank);
         initClients(bank);
 
         bank = new Bank();
         bank.name = "РосГосНавозБанк";
         bank.totalMoneyCount = rnd.nextDouble(1000000);
         bankService.addBank(bank);
-        initBankAtms(bank);
         initOffices(bank);
+        initBankAtms(bank);
         initClients(bank);
 
         bank = new Bank();
         bank.name = "LamaBank";
         bank.totalMoneyCount = rnd.nextDouble(1000000);
         bankService.addBank(bank);
-        initBankAtms(bank);
         initOffices(bank);
+        initBankAtms(bank);
         initClients(bank);
 
         bank = new Bank();
         bank.name = "СпёрБанк";
         bank.totalMoneyCount = rnd.nextDouble(1000000);
         bankService.addBank(bank);
-        initBankAtms(bank);
         initOffices(bank);
+        initBankAtms(bank);
         initClients(bank);
     }
 
@@ -117,6 +117,7 @@ public class Startup {
         office.canSetAtm = true;
         office.isGiveCredits = true;
         office.isWorking = true;
+        office.bankAtms = bank.atms;
         bankOfficeService.addOffice(office);
         bankService.addNewBankOffice(bank.id, office.id);
         initEmployeer(office);
@@ -128,6 +129,7 @@ public class Startup {
         office.canSetAtm = false;
         office.isGiveCredits = false;
         office.isWorking = true;
+        office.bankAtms = bank.atms;
         bankOfficeService.addOffice(office);
         bankService.addNewBankOffice(bank.id, office.id);
         initEmployeer(office);
@@ -139,6 +141,7 @@ public class Startup {
         office.canSetAtm = false;
         office.isGiveCredits = false;
         office.isWorking = false;
+        office.bankAtms = bank.atms;
         bankOfficeService.addOffice(office);
         bankService.addNewBankOffice(bank.id, office.id);
         initEmployeer(office);
