@@ -112,7 +112,7 @@ public class Startup {
     void initOffices(Bank bank){
         BankOffice office = new BankOffice();
         office.name = bank.name + " офис обслуживания номер 1";
-        office.address = "г.Белгород, ул. Спортивная, д2" + rnd.nextInt(1, 100);
+        office.address = "г.Белгород, ул. Спортивная, д" + rnd.nextInt(1, 100);
         office.rentPrice = 15000;
         office.canSetAtm = true;
         bankOfficeService.addOffice(office);
@@ -130,7 +130,7 @@ public class Startup {
 
         office = new BankOffice();
         office.name = bank.name + " офис обслуживания номер 1";
-        office.address = "г.Бибово, ул. Бобова, д2" + rnd.nextInt(1, 100);
+        office.address = "г.Бибово, ул. Бобова, д" + rnd.nextInt(1, 100);
         office.rentPrice = 2000;
         office.canSetAtm = true;
         bankOfficeService.addOffice(office);
@@ -142,6 +142,9 @@ public class Startup {
         atm.name = bank.name + " банкомат номер 1";
         atm.isGiveMoney = true;
         atm.isTakeMoney = true;
+        atm.adress = "с. Хитропоповка, ул. Базарова д"+rnd.nextInt(1, 100);
+        atm.setMoneyCount(rnd.nextDouble(bank.totalMoneyCount / 3));
+        atm.servicePrice = rnd.nextInt(2000);
         atmService.addAtm(atm);
         bankService.addAtmToBank(bank.id, atm.id);
 
@@ -149,6 +152,9 @@ public class Startup {
         atm.name = bank.name + " банкомат номер 2";
         atm.isGiveMoney = true;
         atm.isTakeMoney = false;
+        atm.adress = "г.Белгород, ул. Спортивная, д"+rnd.nextInt(1, 100);
+        atm.setMoneyCount(rnd.nextDouble(bank.totalMoneyCount / 3));
+        atm.servicePrice = rnd.nextInt(2000);
         atmService.addAtm(atm);
         bankService.addAtmToBank(bank.id, atm.id);
 
@@ -156,6 +162,9 @@ public class Startup {
         atm.name = bank.name + " банкомат номер 3";
         atm.isGiveMoney = false;
         atm.isTakeMoney = true;
+        atm.adress = "г.Бибово, ул. Бобова, д"+rnd.nextInt(1, 100);
+        atm.setMoneyCount(rnd.nextDouble(bank.totalMoneyCount / 3));
+        atm.servicePrice = rnd.nextInt(2000);
         atmService.addAtm(atm);
         bankService.addAtmToBank(bank.id, atm.id);
     }
