@@ -1,7 +1,9 @@
 package main.java.bank.service.impl;
 
 import main.java.bank.base.BankRepository;
+import main.java.bank.entity.CreditAccount;
 import main.java.bank.entity.Employee;
+import main.java.bank.exceptions.NotFoundException;
 import main.java.bank.service.EmployeeService;
 
 import java.util.Collection;
@@ -11,8 +13,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeServiceImpl(BankRepository rep){
         this.rep = rep;
     }
-    public Employee getEmployee(int id) {
-        return rep.employees.get(id);
+    public Employee getEmployee(int id) throws RuntimeException{
+        var res = rep.employees.get(id);
+        if(res == null) throw new NotFoundException(id, Employee.class);
+        return res;
     }
     public Collection<Employee> getAll() {
         return rep.employees.get();
@@ -22,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             rep.employees.add(entity);
             return entity;
         }
-        catch(Exception ex) {
+        catch(RuntimeException ex) {
             System.out.println("Ошибка добавления сотрудника: " + ex.getMessage());
             return null;
         }
@@ -32,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         try {
             return rep.employees.update(model);
         }
-        catch(Exception ex) {
+        catch(RuntimeException ex) {
             System.out.println("Ошибка изменения сотрудника: " + ex.getMessage());
             return null;
         }

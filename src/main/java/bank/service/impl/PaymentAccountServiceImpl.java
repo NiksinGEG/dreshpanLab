@@ -2,8 +2,10 @@ package main.java.bank.service.impl;
 
 import main.java.bank.base.BankRepository;
 import main.java.bank.entity.Bank;
+import main.java.bank.entity.Employee;
 import main.java.bank.entity.PaymentAccount;
 import main.java.bank.entity.User;
+import main.java.bank.exceptions.NotFoundException;
 import main.java.bank.service.BankService;
 import main.java.bank.service.PaymentAccountService;
 import main.java.bank.service.UserService;
@@ -19,8 +21,10 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
         this.userService = userService;
         this.bankService = bankService;
     }
-    public PaymentAccount getPaymentAccount(int id) {
-        return rep.paymentAccounts.get(id);
+    public PaymentAccount getPaymentAccount(int id) throws RuntimeException{
+        var res = rep.paymentAccounts.get(id);
+        if(res == null) throw new NotFoundException(id, PaymentAccount.class);
+        return res;
     }
     public Collection<PaymentAccount> getAll() {
         return rep.paymentAccounts.get();

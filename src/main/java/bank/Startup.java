@@ -32,7 +32,7 @@ public class Startup {
             "Консультант","Оператор","Менеджер","Бухгалтер","Уборщица"
     };
 
-    public void initBanks() throws Exception{
+    public void initBanks() throws RuntimeException{
         Random rnd = new Random();
         Bank bank = new Bank();
         bank.name = "FPeople";
@@ -75,7 +75,7 @@ public class Startup {
         initClients(bank);
     }
 
-    void initClients(Bank bank) throws Exception{
+    void initClients(Bank bank) throws RuntimeException{
         for(int i = 0; i < 5; i++){
             User user = new User();
             user.name = names[rnd.nextInt(names.length - 1)];
@@ -137,7 +137,7 @@ public class Startup {
         bankService.addNewBankOffice(bank.id, office.id);
         initEmployeer(office);
     }
-    void initBankAtms(Bank bank) throws Exception{
+    void initBankAtms(Bank bank) throws RuntimeException{
         BankAtm atm = new BankAtm();
         atm.name = bank.name + " банкомат номер 1";
         atm.isGiveMoney = true;
@@ -174,13 +174,13 @@ public class Startup {
             paService.openPaymentAccount(user.id, bank.id, rnd.nextDouble(500));
         }
     }
-    void initCreditAccounts(User user, Bank bank) throws Exception{
+    void initCreditAccounts(User user, Bank bank) throws RuntimeException{
         var creditial = bank.employees.stream()
                 .filter((employee) -> employee.canGiveCredit == true)
                 .findFirst()
                 .orElse(null);
         if(creditial == null)
-            throw new Exception("Никто не выдает кредиты в банке " + bank.name);
+            throw new RuntimeException("Никто не выдает кредиты в банке " + bank.name);
         for(PaymentAccount paAccount : user.paymentAccounts)
             caService.openCreditAccount(user.id, bank.id, creditial.id, paAccount.id, rnd.nextDouble(10000), rnd.nextInt(12));
     }

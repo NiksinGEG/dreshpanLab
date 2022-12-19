@@ -2,10 +2,13 @@ package main.java.bank.service.impl;
 
 import main.java.bank.base.BankRepository;
 import main.java.bank.entity.*;
+import main.java.bank.exceptions.NotFoundException;
 import main.java.bank.service.*;
 
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class CreditAccountServiceImpl implements CreditAccounService {
     private BankRepository rep;
@@ -20,8 +23,10 @@ public class CreditAccountServiceImpl implements CreditAccounService {
         this.employeeService = employeeService;
         this.paymentAccountService = paymentAccountService;
     }
-    public CreditAccount getCreditAccount(int id) {
-        return rep.creditAccounts.get(id);
+    public CreditAccount getCreditAccount(int id) throws NotFoundException {
+        var res = rep.creditAccounts.get(id);
+        if(res == null) throw new NotFoundException(id, CreditAccount.class);
+        return res;
     }
 
     public Collection<CreditAccount> getAll() {
@@ -33,17 +38,17 @@ public class CreditAccountServiceImpl implements CreditAccounService {
             rep.creditAccounts.add(creditAcc);
             return creditAcc;
         }
-        catch (Exception ex) {
+        catch (RuntimeException ex) {
             System.out.println("Ошибка добавления кредитного счета: " + ex.getMessage());
             return null;
         }
     }
 
-    public CreditAccount updateCreditAccount(CreditAccount model) {
+    public CreditAccount updateCreditAccount(CreditAccount model){
         try {
             return rep.creditAccounts.update(model);
         }
-        catch(Exception ex) {
+        catch(RuntimeException ex) {
             System.out.println("Ошибка изменения кредитного счета: " + ex.getMessage());
             return null;
         }
@@ -63,8 +68,10 @@ public class CreditAccountServiceImpl implements CreditAccounService {
         creditAccount.paymentAccount = paymentAccount;
         creditAccount.month = months;
         creditAccount.monthPayment = monthPayment;
-        creditAccount.dateBegin = new Date();
-        creditAccount.dateEnd = creditAccount.dateBegin;
+        Calendar calendar = new GregorianCalendar();
+        creditAccount.dateBegin = calendar.getTime();
+        calendar.add(Calendar.MONTH,months);
+        creditAccount.dateEnd = calendar.getTime();
 
         user.creditAccounts.add(creditAccount);
         employee.accounts.add(creditAccount);

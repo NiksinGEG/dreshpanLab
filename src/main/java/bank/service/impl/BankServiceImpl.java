@@ -2,6 +2,7 @@ package main.java.bank.service.impl;
 
 import main.java.bank.base.BankRepository;
 import main.java.bank.entity.*;
+import main.java.bank.exceptions.NotFoundException;
 import main.java.bank.service.*;
 
 import java.util.Collection;
@@ -19,8 +20,10 @@ public class BankServiceImpl implements BankService {
         this.employeeService = employeeService;
         this.userService = userService;
     }
-    public Bank get(int id) {
-        return rep.banks.get(id);
+    public Bank get(int id) throws NotFoundException {
+        var res = rep.banks.get(id);
+        if(res == null) throw new NotFoundException(id, Bank.class);
+        return res;
     }
 
     public Collection<Bank> getAll() {
@@ -32,7 +35,7 @@ public class BankServiceImpl implements BankService {
             rep.banks.add(bank);
             return bank;
         }
-        catch(Exception ex) {
+        catch(RuntimeException ex) {
             System.out.println("Ошибка добавления банка: " + ex.getMessage());
             return null;
         }
@@ -42,17 +45,17 @@ public class BankServiceImpl implements BankService {
         try {
             return rep.banks.update(b);
         }
-        catch(Exception ex) {
+        catch(RuntimeException ex) {
             System.out.println("Ошибка при изменении банка: " + ex.getMessage());
             return null;
         }
     }
-    public Bank addAtmToBank(int bankId, int atmId) throws Exception {
+    public Bank addAtmToBank(int bankId, int atmId) throws RuntimeException {
         Bank bank = this.get(bankId);
         BankAtm atm = atmService.getAtm(atmId);
 
         if(bank.atms.contains(atm))
-            throw new Exception("Банкомат с id = " + atm.id + " уже имеется в банке");
+            throw new RuntimeException("Банкомат с id = " + atm.id + " уже имеется в банке");
 
         atm.bank = bank;
         bank.atms.add(atm);

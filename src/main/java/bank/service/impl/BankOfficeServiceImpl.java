@@ -1,8 +1,10 @@
 package main.java.bank.service.impl;
 
 import main.java.bank.base.BankRepository;
+import main.java.bank.entity.BankAtm;
 import main.java.bank.entity.BankOffice;
 import main.java.bank.entity.Employee;
+import main.java.bank.exceptions.NotFoundException;
 import main.java.bank.service.BankOfficeService;
 import main.java.bank.service.EmployeeService;
 
@@ -16,8 +18,10 @@ public class BankOfficeServiceImpl implements BankOfficeService {
         this.rep = rep;
         this.employeeService = employeeService;
     }
-    public BankOffice getOffice(int id) {
-        return rep.offices.get(id);
+    public BankOffice getOffice(int id) throws NotFoundException {
+        var res = rep.offices.get(id);
+        if(res == null) throw new NotFoundException(id, BankOffice.class);
+        return res;
     }
     public Collection<BankOffice> getAllOffices() {
         return rep.offices.get();
@@ -27,7 +31,7 @@ public class BankOfficeServiceImpl implements BankOfficeService {
             rep.offices.add(office);
             return office;
         }
-        catch(Exception ex) {
+        catch(RuntimeException ex) {
             System.out.println("Ошибка добавления офиса: " + ex.getMessage());
             return null;
         }
@@ -36,7 +40,7 @@ public class BankOfficeServiceImpl implements BankOfficeService {
         try {
             return rep.offices.update(office);
         }
-        catch(Exception ex) {
+        catch(RuntimeException ex) {
             System.out.println("Ошибка изменения офиса: " + ex.getMessage());
             return null;
         }

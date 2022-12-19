@@ -5,6 +5,7 @@ import main.java.bank.entity.BankAtm;
 import main.java.bank.entity.BankOffice;
 import main.java.bank.entity.Employee;
 import main.java.bank.entity.enums.AtmStatuses;
+import main.java.bank.exceptions.NotFoundException;
 import main.java.bank.service.AtmService;
 
 import java.util.Collection;
@@ -16,8 +17,11 @@ public class AtmServiceImpl implements AtmService{
         this.rep = rep;
     }
     @Override
-    public BankAtm getAtm(int id) {
-        return rep.atms.get(id);
+    public BankAtm getAtm(int id) throws NotFoundException {
+        var res = rep.atms.get(id);
+        if(res == null) throw new NotFoundException(id, BankAtm.class);
+        return res;
+
     }
     @Override
     public Collection<BankAtm> getAllAtms() {
@@ -61,7 +65,7 @@ public class AtmServiceImpl implements AtmService{
         }
     }
     @Override
-    public BankAtm setEmployee(int atmId, Employee employee) throws Exception {
+    public BankAtm setEmployee(int atmId, Employee employee) throws RuntimeException {
         BankAtm atm = rep.atms.get(atmId);
         atm.employee = employee;
         return rep.atms.update(atm);

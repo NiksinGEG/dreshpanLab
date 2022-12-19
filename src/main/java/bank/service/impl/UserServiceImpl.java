@@ -1,7 +1,9 @@
 package main.java.bank.service.impl;
 
 import main.java.bank.base.BankRepository;
+import main.java.bank.entity.PaymentAccount;
 import main.java.bank.entity.User;
+import main.java.bank.exceptions.NotFoundException;
 import main.java.bank.service.UserService;
 
 import java.util.Collection;
@@ -12,7 +14,9 @@ public class UserServiceImpl implements UserService {
         this.rep = rep;
     }
     public User getUser(int id) {
-        return rep.users.get(id);
+        var res = rep.users.get(id);
+        if(res == null) throw new NotFoundException(id, User.class);
+        return res;
     }
     public Collection<User> getAll() {
         return rep.users.get();
@@ -22,7 +26,7 @@ public class UserServiceImpl implements UserService {
             rep.users.add(user);
             return user;
         }
-        catch(Exception ex) {
+        catch(RuntimeException ex) {
             System.out.println("Ошибка при добавлении пользователя: " + ex.getMessage());
             return null;
         }
@@ -32,7 +36,7 @@ public class UserServiceImpl implements UserService {
         try {
             return rep.users.update(model);
         }
-        catch(Exception ex) {
+        catch(RuntimeException ex) {
             System.out.println("Ошибка при изменении данных пользователя: " + ex.getMessage());
             return null;
         }

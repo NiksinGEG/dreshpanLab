@@ -20,10 +20,14 @@ public class Main {
         try{
             Startup st = new Startup();
             st.initBanks();
-            printMenu(st.bankService.getAll());
+            //printMenu(st.bankService.getAll());
+
+            System.out.print("Добрый вечер, введите свой уникальный идентификационнй номер: ");
             Scanner scanner = new Scanner(System.in);
-            int bankId = scanner.nextInt();
-            System.out.println(st.bankService.get(bankId));
+            var userId = scanner.nextInt();
+            var choosenUser = st.userService.getUser(userId);
+            System.out.println("===Неиного информации о вас: Кредитный рейтинг: " + choosenUser.creditRate + "===");
+            //System.out.println(st.bankService.get(bankId));
         }
         catch(Exception ex){
             System.out.println("Что то пошло не так: " + ex.getMessage());

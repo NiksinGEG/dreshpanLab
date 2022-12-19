@@ -1,15 +1,16 @@
 package main.java.bank.service;
 
 import main.java.bank.entity.Bank;
+import main.java.bank.exceptions.NotFoundException;
 
 import java.util.Collection;
 
 public interface BankService {
-    Bank get(int id);
+    Bank get(int id) throws NotFoundException;
     Collection<Bank> getAll();
     Bank addBank(Bank bank);
     Bank updateBank(Bank bank);
-    Bank addAtmToBank(int bankId, int atmId) throws Exception;
+    Bank addAtmToBank(int bankId, int atmId) throws RuntimeException;
     Bank addNewBankOffice(int bankId, int officeId);
     Bank addEmployeeToBank(int bankId, int employeeId);
     Bank addBankUser(int bankId, int userId);

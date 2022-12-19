@@ -5,7 +5,7 @@ import main.java.bank.entity.CreditAccount;
 import java.util.Collection;
 
 public interface CreditAccounService {
-    CreditAccount getCreditAccount(int id);
+    CreditAccount getCreditAccount(int id) throws RuntimeException;
     Collection<CreditAccount> getAll();
     CreditAccount addCreditAccount(CreditAccount creditAcc);
     CreditAccount updateCreditAccount(CreditAccount model);
