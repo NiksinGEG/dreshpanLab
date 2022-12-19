@@ -35,32 +35,10 @@ public class Bank extends BaseEntity {
 
     public String toString(){
         return String.format("""
-                        \sНазвание банка: %s;
-                        \sКоличество офисов: %s; 
-                        \sКоличество банкоматов: %s;
-                        \sКоличество сотрудников: %s;
-                        \sКоличество клиентов: %s;
-                        \sРейтинг: %s;
-                        \sПроцентная ставка: %.2f;
-                        \sОбщее количество денях: %.2f; 
-                        \sБанкоматы: %s;
-                        \sОфисы: %s;
-                        \sКлиенты: %s;
-                        \sСотрудники: %s;
-                        \sПлатежные аккаунты: %s""",
+                        \sНазвание банка: %s; \sРейтинг: %s; \sПроцентная ставка: %.2f;""",
                 name,
-                officeNum,
-                atmNum,
-                employeeNum,
-                clientNum,
                 rating,
-                percent,
-                totalMoneyCount,
-                StringHelper.fromCollectionToString(atms),
-                StringHelper.fromCollectionToString(offices),
-                StringHelper.fromCollectionToString(users),
-                StringHelper.fromCollectionToString(employees),
-                StringHelper.fromCollectionToString(paymentAccounts));
+                percent);
 
     }
 }

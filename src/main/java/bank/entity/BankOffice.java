@@ -24,17 +24,11 @@ public class BankOffice extends BaseEntity {
     }
     @Override
     public String toString() {
-        return String.format("Офис банка: Адрес=%s;Работает=%s;Возможность поставить банкомат=%s;Кол-во банкоматов=%s;Выдает кредиты=%s;" +
-                        "Выдает деньги=%s;Принимает деньги=%s;Количество денег=%s;Стоимость аренды=%.2f",
+        return String.format("Офис банка: Id=%s; Название=%s; Адрес=%s; Работает=%s; Выдает кредиты=%s",
+                id,
                 name,
                 address,
                 isWorking,
-                canSetAtm,
-                countAtm,
-                isGiveCredits,
-                isGiveMoney,
-                isTakeMoney,
-                moneyCount,
-                rentPrice);
+                isGiveCredits);
     }
 }

@@ -23,14 +23,10 @@ public class Employee extends BaseEntity {
         accounts = new LinkedList<>();
     }
     public String toString() {
-        return String.format("Работник: Имя=%s;Дата рождения=%s;Должность=%s;Работает удаленно=%s;Номер офиса, в котором работает=%s;" +
-                        "Может выдать кредит=%s;Жалование=%.2f",
+        return String.format("Работник: Id=%s; Имя=%s; Дата рождения=%s; Должность=%s;",
+                id,
                 name,
                 birthday,
-                post,
-                isWorkDistance,
-                office.id,
-                canGiveCredit,
-                salary);
+                post);
     }
 }

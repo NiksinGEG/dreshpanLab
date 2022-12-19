@@ -26,7 +26,7 @@ public class EntityContainer <TypeEntity extends BaseEntity>{
         if(entities.contains(entity))
             throw new CrudOperationException("Коллекция уже содержит данный элемент", entity.getClass(), CrudOperations.Create);
         var count = entities.size();
-        if(entity.id < count)
+        if(entity.id > count)
             throw new CrudOperationException("В коллекции уже существует элемент с таким id", entity.getClass(), CrudOperations.Create);
         entity.id = count + 1;
         entities.add(entity);

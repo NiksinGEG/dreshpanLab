@@ -115,6 +115,8 @@ public class Startup {
         office.address = "г.Белгород, ул. Спортивная, д" + rnd.nextInt(1, 100);
         office.rentPrice = 15000;
         office.canSetAtm = true;
+        office.isGiveCredits = true;
+        office.isWorking = true;
         bankOfficeService.addOffice(office);
         bankService.addNewBankOffice(bank.id, office.id);
         initEmployeer(office);
@@ -124,6 +126,8 @@ public class Startup {
         office.address = "c.Абобовка, ул. Жмышенко, д" + rnd.nextInt(1, 100);
         office.rentPrice = 1000;
         office.canSetAtm = false;
+        office.isGiveCredits = false;
+        office.isWorking = true;
         bankOfficeService.addOffice(office);
         bankService.addNewBankOffice(bank.id, office.id);
         initEmployeer(office);
@@ -132,7 +136,9 @@ public class Startup {
         office.name = bank.name + " офис обслуживания номер 1";
         office.address = "г.Бибово, ул. Бобова, д" + rnd.nextInt(1, 100);
         office.rentPrice = 2000;
-        office.canSetAtm = true;
+        office.canSetAtm = false;
+        office.isGiveCredits = false;
+        office.isWorking = false;
         bankOfficeService.addOffice(office);
         bankService.addNewBankOffice(bank.id, office.id);
         initEmployeer(office);
@@ -143,7 +149,7 @@ public class Startup {
         atm.isGiveMoney = true;
         atm.isTakeMoney = true;
         atm.adress = "с. Хитропоповка, ул. Базарова д"+rnd.nextInt(1, 100);
-        atm.setMoneyCount(rnd.nextDouble(bank.totalMoneyCount / 3));
+        atm.setMoneyCount(rnd.nextDouble(bank.totalMoneyCount / 3 + 5000));
         atm.servicePrice = rnd.nextInt(2000);
         atmService.addAtm(atm);
         bankService.addAtmToBank(bank.id, atm.id);
