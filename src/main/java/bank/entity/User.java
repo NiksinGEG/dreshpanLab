@@ -1,6 +1,6 @@
 package main.java.bank.entity;
 
-import main.java.bank.StringHelper;
+import main.java.bank.helper.StringHelper;
 import main.java.bank.base.BaseEntity;
 
 import java.util.Collection;

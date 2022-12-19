@@ -1,4 +1,4 @@
-package main.java.bank;
+package main.java.bank.helper;
 
 import java.util.Collection;
 import java.util.StringJoiner;

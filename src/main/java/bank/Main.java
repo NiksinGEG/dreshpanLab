@@ -1,17 +1,11 @@
 import main.java.bank.Startup;
-import main.java.bank.StringHelper;
-import main.java.bank.base.BankRepository;
+import main.java.bank.helper.Serializer;
+import main.java.bank.helper.StringHelper;
 import main.java.bank.base.BaseEntity;
-import main.java.bank.base.EntityContainer;
 import main.java.bank.entity.*;
 import main.java.bank.entity.enums.BankTransaction;
 import main.java.bank.exceptions.BankTransactionException;
 import main.java.bank.exceptions.ValidationException;
-import main.java.bank.service.*;
-import main.java.bank.service.impl.*;
-
-import javax.swing.text.html.Option;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class Main {
@@ -32,6 +26,7 @@ public class Main {
             Startup st = new Startup();
             st.initBanks();
             //printMenu(st.bankService.getAll());
+            System.out.println(Serializer.serialize(st.paService.getAll()));
 
             System.out.print("Добрый вечер, введите свой уникальный идентификационнй номер: ");
             Scanner scanner = new Scanner(System.in);
