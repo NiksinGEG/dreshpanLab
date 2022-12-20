@@ -34,7 +34,8 @@ public class Bank extends BaseEntity {
 
     public String toString(){
         return String.format("""
-                        \sНазвание банка: %s; \sРейтинг: %s; \sПроцентная ставка: %.2f;""",
+                        \sid: %s; \sНазвание банка: %s; \sРейтинг: %s; \sПроцентная ставка: %.2f;""",
+                id,
                 name,
                 rating,
                 percent);

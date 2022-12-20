@@ -20,20 +20,20 @@ public class Serializer {
                 depth--;
                 i++;
             }
+            if(fields[i].get(object) instanceof Collection<?>) continue;
             var value = fields[i].get(object);
             res+= "\t" + fields[i].getName() + " : " + (value == null ? "null" : value.toString()) + ",\n";
         }
         for(int j = 0; j < depth;j++)
             res += "\t";
         res += "},\n";
-        System.out.println(res);
         return res;
     }
     public static <T> String serialize(Collection<T> objects) throws Exception{
         var res = "";
         for(Object object : objects) {
             res += "{\n";
-            res += serialize(object) + ",\n";
+            res += serialize(object);
         }
         return res;
     }

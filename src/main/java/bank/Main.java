@@ -25,15 +25,22 @@ public class Main {
         try{
             Startup st = new Startup();
             st.initBanks();
+
             //printMenu(st.bankService.getAll());
-            System.out.println(Serializer.serialize(st.paService.getAll()));
+
+            //System.out.println(Serializer.serialize(st.paService.getAll()));
 
             System.out.print("Добрый вечер, введите свой уникальный идентификационнй номер: ");
             Scanner scanner = new Scanner(System.in);
             var userId = scanner.nextInt();
             var choosenUser = st.userService.getUser(userId);
             System.out.println("===Ващ кредитный рейтинг: " + choosenUser.creditRate);
-            System.out.print("===Введите сумму, которую хотели взять в кредит: ");
+            System.out.println("===Ваши платежные счета:\n" + choosenUser.paymentAccounts);
+            sendPaymentAccount(choosenUser, st);
+            //System.out.println(Serializer.serialize(choosenUser.paymentAccounts));
+
+
+            /*System.out.print("===Введите сумму, которую хотели взять в кредит: ");
             var sum = scanner.nextDouble();
             var creditAcc = getCredit(choosenUser, st, sum);
             if(creditAcc != null)
@@ -43,11 +50,20 @@ public class Main {
             }
             else{
                 System.out.println("===К сожалению пока мы не можем выдать вам кредит. Попробуйте позже");
-            }
+            }*/
         }
         catch(Exception ex){
             System.out.println("Что то пошло не так: " + ex.getMessage());
         }
+    }
+    private static void sendPaymentAccount(User user, Startup st) throws Exception{
+        System.out.println("===Выберите банк,из которого вы хотито перенести счета: ");
+        var bank = printMenu(user.banks);
+        System.out.println("===Идет сохранение данных платежных аккаунтов в файл. Пожалуйста, подождите . . .");
+        st.userService.sendPayAccounts(user.id, bank.name, "PaymentAccs.txt");
+        System.out.println("===Выберите банк, в который вы хотите перенести платежные счета");
+        bank = printMenu(st.bankService.getAll());
+
 
     }
     private static CreditAccount getCredit(User user, Startup st, double creditSum) throws Exception{

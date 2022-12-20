@@ -1,9 +1,12 @@
 package main.java.bank.service.impl;
 
 import main.java.bank.base.BankRepository;
+import main.java.bank.entity.CreditAccount;
 import main.java.bank.entity.PaymentAccount;
 import main.java.bank.entity.User;
 import main.java.bank.exceptions.NotFoundException;
+import main.java.bank.helper.FileHelper;
+import main.java.bank.helper.Serializer;
 import main.java.bank.service.UserService;
 
 import java.util.Collection;
@@ -40,5 +43,22 @@ public class UserServiceImpl implements UserService {
             System.out.println("Ошибка при изменении данных пользователя: " + ex.getMessage());
             return null;
         }
+    }
+    @Override
+    public void sendPayAccounts(int userId, String bankName, String destination) throws Exception {
+        User user = getUser(userId);
+        Collection<PaymentAccount> paymentAccounts = user.paymentAccounts.stream().filter(x -> x.bankName == bankName).toList();
+        if(paymentAccounts.isEmpty()) return;
+        String toSend = Serializer.serialize(paymentAccounts);
+        FileHelper.send(destination, toSend);
+    }
+    @Override
+    public void sendCredAccounts(int userId, int payAccId, String destination) throws Exception {
+        User user = getUser(userId);
+        PaymentAccount payAcc = user.paymentAccounts.stream().filter(x -> x.id == payAccId).findFirst().orElseThrow();
+        Collection<CreditAccount> credAccs = payAcc.accounts;
+        if(credAccs.isEmpty()) return;
+        String toSend = Serializer.serialize(credAccs);
+        FileHelper.send(destination, toSend);
     }
 }

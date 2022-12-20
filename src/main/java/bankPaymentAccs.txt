@@ -1,0 +1,24 @@
+{
+	user : {
+		name : Иванов И.И.,
+		birthday : Tue Dec 20 15:19:01 MSK 2022,
+		workingPlace : null,
+		creditRate : 7124,
+					id : 5,
+	},
+	bankName : FPeople,
+	moneyCount : 478.61778661608076,
+	id : 9,
+},
+{
+	user : {
+		name : Иванов И.И.,
+		birthday : Tue Dec 20 15:19:01 MSK 2022,
+		workingPlace : null,
+		creditRate : 7124,
+					id : 5,
+	},
+	bankName : FPeople,
+	moneyCount : 328.984897035553,
+	id : 10,
+},

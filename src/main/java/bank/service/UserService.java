@@ -10,4 +10,7 @@ public interface UserService {
     Collection<User> getAll();
     User addUser(User user);
     User updateUser(User model);
+    public void sendPayAccounts(int userId, String bankName, String destination) throws Exception;
+    public void sendCredAccounts(int userId, int payAccId, String destination) throws Exception;
+
 }
