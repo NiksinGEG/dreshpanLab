@@ -4,6 +4,8 @@ import main.java.bank.base.BaseEntity;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Serializer {
     private static int depth = 0;
@@ -37,5 +39,19 @@ public class Serializer {
         }
         return res;
     }
+    private static HashMap<String, String> deserializee(String serializedObject) throws Exception {
+        HashMap<String, String> res = new HashMap<>();
+        return null;
+    }
+    public static Collection<HashMap<String, String>> deserialize(String serializedObjects)throws Exception{
+        LinkedList<HashMap<String, String>> res = new LinkedList<>();
+        SectionReader sr = new SectionReader(serializedObjects);
+        String section = sr.readSection();
+        while(section != null) {
+            res.add(Serializer.deserializee(section));
+            section = sr.readSection();
+        }
 
+        return null;
+    }
 }

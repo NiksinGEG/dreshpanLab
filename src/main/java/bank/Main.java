@@ -63,7 +63,7 @@ public class Main {
         st.userService.sendPayAccounts(user.id, bank.name, "PaymentAccs.txt");
         System.out.println("===Выберите банк, в который вы хотите перенести платежные счета");
         bank = printMenu(st.bankService.getAll());
-
+        st.paService.migrateFromFile("PaymentAccs.txt", bank.id);
 
     }
     private static CreditAccount getCredit(User user, Startup st, double creditSum) throws Exception{

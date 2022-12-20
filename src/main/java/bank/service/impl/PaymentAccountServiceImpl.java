@@ -6,11 +6,16 @@ import main.java.bank.entity.Employee;
 import main.java.bank.entity.PaymentAccount;
 import main.java.bank.entity.User;
 import main.java.bank.exceptions.NotFoundException;
+import main.java.bank.helper.FileHelper;
+import main.java.bank.helper.Serializer;
 import main.java.bank.service.BankService;
 import main.java.bank.service.PaymentAccountService;
 import main.java.bank.service.UserService;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 public class PaymentAccountServiceImpl implements PaymentAccountService {
     private BankRepository rep;
@@ -63,5 +68,22 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
         userService.updateUser(user);
 
         return this.addPaymentAccount(paymentAccount);
+    }
+    public PaymentAccount migrateToBank(Map<String, String> payAccData, String bankName) throws Exception {
+        PaymentAccount newPayAcc = PaymentAccount.fromMap(payAccData);
+
+        if(newPayAcc.bankName == bankName)
+            throw new Exception("Ошибка переноса: банк-источник и банк-цель совпадают");
+
+        return null;//openPaymentAccount(newPayAcc.userId, bankId, newPayAcc.moneyAmount);
+    }
+    public Collection<PaymentAccount> migrateFromFile(String source, int bankId) throws Exception {
+        String serialized = FileHelper.get(source);
+        Collection<HashMap<String, String>> maps = Serializer.deserialize(serialized);
+        LinkedList<PaymentAccount> res = new LinkedList<>();
+        /*for(Map<String, String> map : maps) {
+            res.add(migrateToBank(map, bankId));
+        }*/
+        return res;
     }
 }

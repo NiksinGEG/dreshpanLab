@@ -1,0 +1,24 @@
+{
+	user : {
+		name : Петров П.П.,
+		birthday : Tue Dec 20 16:46:09 MSK 2022,
+		workingPlace : null,
+		creditRate : 6391,
+					id : 5,
+	},
+	bankName : FPeople,
+	moneyCount : 252.66891534075182,
+	id : 9,
+},
+{
+	user : {
+		name : Петров П.П.,
+		birthday : Tue Dec 20 16:46:09 MSK 2022,
+		workingPlace : null,
+		creditRate : 6391,
+					id : 5,
+	},
+	bankName : FPeople,
+	moneyCount : 56.45015006604292,
+	id : 10,
+},

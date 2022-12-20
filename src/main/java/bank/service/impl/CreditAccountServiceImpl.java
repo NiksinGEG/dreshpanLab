@@ -3,12 +3,11 @@ package main.java.bank.service.impl;
 import main.java.bank.base.BankRepository;
 import main.java.bank.entity.*;
 import main.java.bank.exceptions.NotFoundException;
+import main.java.bank.helper.FileHelper;
+import main.java.bank.helper.Serializer;
 import main.java.bank.service.*;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 public class CreditAccountServiceImpl implements CreditAccounService {
     private BankRepository rep;
@@ -82,5 +81,25 @@ public class CreditAccountServiceImpl implements CreditAccounService {
         paymentAccountService.updatePaymentAccount(paymentAccount);
 
         return this.addCreditAccount(creditAccount);
+    }
+    public CreditAccount migrateToNewPaymentAccount(Map<String, String> credAccData, int payAccId) throws Exception {
+        //CreditAccount newCredAcc = CreditAccount.fromMap(credAccData);
+        PaymentAccount newPayAcc = paymentAccountService.getPaymentAccount(payAccId);
+
+        /*return openCreditAccount(
+                newPayAcc.id,
+                //newCredAcc.monthPayment,
+                newCredAcc.month);*/
+        return null;
+    }
+
+    public Collection<CreditAccount> migrateFromFile(String source, int payAccId) throws Exception {
+        String serialized = FileHelper.get(source);
+        //Collection<HashMap<String, String>> maps = Serializer.deserialize(serialized);
+        LinkedList<CreditAccount> res = new LinkedList<>();
+        /*for(Map<String, String> map : maps) {
+            res.add(migrateToNewPaymentAccount(map, payAccId));
+        }*/
+        return res;
     }
 }

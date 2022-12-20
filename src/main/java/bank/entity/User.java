@@ -3,10 +3,7 @@ package main.java.bank.entity;
 import main.java.bank.helper.StringHelper;
 import main.java.bank.base.BaseEntity;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.Random;
+import java.util.*;
 
 public class User extends BaseEntity {
     public String name;
@@ -54,5 +51,13 @@ public class User extends BaseEntity {
                 salary,
                 StringHelper.fromCollectionToString(paymentAccounts),
                 StringHelper.fromCollectionToString(creditAccounts));
+    }
+    public static User fromMap(Map<String, String> map) {
+        User res = new User();
+        res.id = Integer.parseInt(map.get("id"));
+        res.name = map.get("name");
+        res.workingPlace = map.get("workingPlace");
+        res.creditRate = Integer.parseInt(map.get("creditRate"));
+        return res;
     }
 }

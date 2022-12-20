@@ -4,6 +4,7 @@ import main.java.bank.base.BaseEntity;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class PaymentAccount extends BaseEntity {
     public User user;
@@ -19,5 +20,13 @@ public class PaymentAccount extends BaseEntity {
                 user.id,
                 bankName,
                 moneyCount);
+    }
+    public static PaymentAccount fromMap(Map<String, String> map) {
+        PaymentAccount res = new PaymentAccount();
+        res.id = Integer.parseInt(map.get("id"));
+        res.bankName = map.get("bankName");
+        //res.user = User.fromMap(map.get("user"));
+        res.moneyCount = Double.parseDouble(map.get("moneyAmount"));
+        return res;
     }
 }
