@@ -1,0 +1,16 @@
+{
+	user : {
+		name : Петров П.П.,
+		birthday : Wed Dec 21 01:24:16 MSK 2022,
+		workingPlace : null,
+		creditRate : 146,
+					id : 5,
+	},
+	bankName : FPeople,
+	dateBegin : Wed Dec 21 01:24:16 MSK 2022,
+	dateEnd : Wed Dec 21 01:24:16 MSK 2022,
+	month : 0,
+	monthPayment : 2636.3753283482747,
+	percent : 15.509248289914002,
+	id : 9,
+},

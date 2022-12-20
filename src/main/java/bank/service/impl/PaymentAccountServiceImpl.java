@@ -69,21 +69,16 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
 
         return this.addPaymentAccount(paymentAccount);
     }
-    public PaymentAccount migrateToBank(Map<String, String> payAccData, String bankName) throws Exception {
+    public PaymentAccount migrateToBank(Map<String, String> payAccData, int bankId) throws Exception {
         PaymentAccount newPayAcc = PaymentAccount.fromMap(payAccData);
+        return openPaymentAccount(newPayAcc.user.id, bankId, newPayAcc.moneyCount);
 
-        if(newPayAcc.bankName == bankName)
-            throw new Exception("Ошибка переноса: банк-источник и банк-цель совпадают");
-
-        return null;//openPaymentAccount(newPayAcc.userId, bankId, newPayAcc.moneyAmount);
     }
     public Collection<PaymentAccount> migrateFromFile(String source, int bankId) throws Exception {
         String serialized = FileHelper.get(source);
-        Collection<HashMap<String, String>> maps = Serializer.deserialize(serialized);
+        HashMap<String, String> map = Serializer.deserialize(serialized);
         LinkedList<PaymentAccount> res = new LinkedList<>();
-        /*for(Map<String, String> map : maps) {
-            res.add(migrateToBank(map, bankId));
-        }*/
+        res.add(migrateToBank(map, bankId));
         return res;
     }
 }

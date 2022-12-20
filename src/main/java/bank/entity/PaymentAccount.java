@@ -16,7 +16,8 @@ public class PaymentAccount extends BaseEntity {
     }
 
     public String toString() {
-        return String.format("Платежный аккаунт: Уникальный номер пользователя=%s;Имя банка=%s;Количество денег=%.2f",
+        return String.format("Платежный аккаунт: %s;Уникальный номер пользователя=%s;Имя банка=%s;Количество денег=%.2f",
+                id,
                 user.id,
                 bankName,
                 moneyCount);

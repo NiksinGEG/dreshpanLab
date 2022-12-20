@@ -58,13 +58,18 @@ public class Main {
     }
     private static void sendPaymentAccount(User user, Startup st) throws Exception{
         System.out.println("===Выберите банк,из которого вы хотито перенести счета: ");
-        var bank = printMenu(user.banks);
-        System.out.println("===Идет сохранение данных платежных аккаунтов в файл. Пожалуйста, подождите . . .");
+        Bank bank = printMenu(user.banks);
+        System.out.println("===Выберите счет,который вы хотите перевести: ");
+        Bank tmp = bank; //ТАК НАДО. Вот просто надо
+        var payAcc = printMenu(user.paymentAccounts.stream().filter(x-> x.bankName == tmp.name).toList());
+        System.out.println("===Идет сохранение данных платежного аккаунта в файл. Пожалуйста, подождите . . .");
+        //st.userService.sendCredAccounts(user.id, payAcc.id, "CreditAccs.txt");
         st.userService.sendPayAccounts(user.id, bank.name, "PaymentAccs.txt");
         System.out.println("===Выберите банк, в который вы хотите перенести платежные счета");
-        bank = printMenu(st.bankService.getAll());
-        st.paService.migrateFromFile("PaymentAccs.txt", bank.id);
-
+        bank = printMenu(st.bankService.getAll().stream().filter(x-> x.id != tmp.id).toList());
+        //st.paService.migrateFromFile("CreditAccs.txt", bank.id);
+        var migratedAccounts = st.paService.migrateFromFile("PaymentAccs.txt", bank.id);
+        System.out.println(migratedAccounts);
     }
     private static CreditAccount getCredit(User user, Startup st, double creditSum) throws Exception{
         var bank = printMenu(st.bankService.getAll());

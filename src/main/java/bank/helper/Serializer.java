@@ -1,14 +1,19 @@
 package main.java.bank.helper;
 
 import main.java.bank.base.BaseEntity;
+import main.java.bank.entity.Employee;
+import main.java.bank.entity.PaymentAccount;
 
 import javax.print.attribute.standard.MediaSize;
 import java.lang.reflect.Field;
+import java.sql.Struct;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Serializer {
+    private static String key;
+    private static String value;
     private static int depth = 0;
     private static boolean isOtherEntity = false;
     private static String otherEntityName = "";
@@ -20,12 +25,15 @@ public class Serializer {
             for(int j = 0; j < depth;j++)
                 res += "\t";
             if(fields[i].get(object) instanceof BaseEntity){
+                if(fields[i].get(object).getClass() == Employee.class) continue;
+                if(fields[i].get(object).getClass() == PaymentAccount.class) continue;
                 depth++;
                 res += "\t" + fields[i].getName() + " : {\n" + serialize(fields[i].get(object));
                 depth--;
                 i++;
             }
             if(fields[i].get(object) instanceof Collection<?>) continue;
+
             var value = fields[i].get(object);
             res+= "\t" + fields[i].getName() + " : " + (value == null ? "null" : value.toString()) + ",\n";
         }
@@ -43,27 +51,27 @@ public class Serializer {
         return res;
     }
 
-    private static HashMap<String, String> deserializeString(String serializedString) throws Exception{
+    private static void deserializeString(String serializedString) throws Exception{
         HashMap<String, String> res = new HashMap<String, String>();
         int i = 0;
         serializedString = serializedString.replaceAll("\\s+","");
         while (i < serializedString.length() && serializedString.charAt(i) != ':') i++;
-        var key = serializedString.substring(0, i);
-        if(key.equals("id") && isOtherEntity){
+        var keyy = serializedString.substring(0, i);
+        if(keyy.equals("id") && isOtherEntity){
             isOtherEntity = false;
-            key = otherEntityName + key;
+            keyy = otherEntityName + keyy;
         }
-        var value = serializedString.substring(i + 1, serializedString.length() - 1);
-        if(value == ""){
+        var valuee = serializedString.substring(i + 1, serializedString.length() - 1);
+        if(valuee == ""){
             isOtherEntity = true;
-            otherEntityName = key;
+            otherEntityName = keyy;
         }
-        res.put(key, value);
-        return res;
+        key = keyy;
+        value = valuee;
     }
 
-    private static Collection<HashMap<String, String>> deserializee(String serializedObject) throws Exception {
-        Collection<HashMap<String, String>> res = new LinkedList<>();
+    private static HashMap<String, String> deserializee(String serializedObject) throws Exception {
+        HashMap<String, String> res = new HashMap<>();
         int i = 0;
         while(i < serializedObject.length() && serializedObject.charAt(i) != '{')
             i++;
@@ -97,19 +105,20 @@ public class Serializer {
             i++;
             var trim = serializedObject.substring(startPos, endPos);
             if(trim.contains(":"))
-                res.add(deserializeString(trim));
+            {
+                deserializeString(trim);
+                res.put(key, value);
+            }
+
             startPos = endPos;
         }
         return res;
     }
-    public static Collection<HashMap<String, String>> deserialize(String serializedObjects)throws Exception{
-        Collection<HashMap<String, String>> res = new LinkedList<>();
+    public static HashMap<String, String> deserialize(String serializedObjects)throws Exception{
+        HashMap<String, String> res;
         SectionReader sr = new SectionReader(serializedObjects);
         String section = sr.readSection();
-        while(section != null) {
-            res = Serializer.deserializee(section);
-            section = sr.readSection();
-        }
-        return null;
+        res = Serializer.deserializee(section);
+        return res;
     }
 }
