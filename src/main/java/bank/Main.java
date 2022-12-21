@@ -67,9 +67,10 @@ public class Main {
         st.userService.sendPayAccounts(user.id, bank.name, "PaymentAccs.txt");
         System.out.println("===Выберите банк, в который вы хотите перенести платежные счета");
         bank = printMenu(st.bankService.getAll().stream().filter(x-> x.id != tmp.id).toList());
-        //st.paService.migrateFromFile("CreditAccs.txt", bank.id);
-        var migratedAccounts = st.paService.migrateFromFile("PaymentAccs.txt", bank.id);
-        System.out.println(migratedAccounts);
+        var migratedPAAccounts = st.paService.migrateFromFile("PaymentAccs.txt", bank.id);
+        var migratedCAAccounts = st.caService.migrateFromFile("CreditAccs.txt", migratedPAAccounts.id, bank.id);
+        System.out.println("Полученные новые ");
+        System.out.println(migratedPAAccounts); System.out.println(migratedCAAccounts);
     }
     private static CreditAccount getCredit(User user, Startup st, double creditSum) throws Exception{
         var bank = printMenu(st.bankService.getAll());

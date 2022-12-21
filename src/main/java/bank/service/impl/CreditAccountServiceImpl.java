@@ -82,24 +82,17 @@ public class CreditAccountServiceImpl implements CreditAccounService {
 
         return this.addCreditAccount(creditAccount);
     }
-    public CreditAccount migrateToNewPaymentAccount(Map<String, String> credAccData, int payAccId) throws Exception {
-        //CreditAccount newCredAcc = CreditAccount.fromMap(credAccData);
+    public CreditAccount migrateToNewPaymentAccount(Map<String, String> credAccData, int payAccId, int bankId) throws Exception {
+        CreditAccount newCredAcc = CreditAccount.fromMap(credAccData);
         PaymentAccount newPayAcc = paymentAccountService.getPaymentAccount(payAccId);
-
-        /*return openCreditAccount(
-                newPayAcc.id,
-                //newCredAcc.monthPayment,
-                newCredAcc.month);*/
-        return null;
+        return openCreditAccount(newPayAcc.user.id, bankId, 1, newPayAcc.id, newCredAcc.monthPayment, newCredAcc.month);
     }
 
-    public Collection<CreditAccount> migrateFromFile(String source, int payAccId) throws Exception {
+    public CreditAccount migrateFromFile(String source, int payAccId, int bankId) throws Exception {
         String serialized = FileHelper.get(source);
-        //Collection<HashMap<String, String>> maps = Serializer.deserialize(serialized);
-        LinkedList<CreditAccount> res = new LinkedList<>();
-        /*for(Map<String, String> map : maps) {
-            res.add(migrateToNewPaymentAccount(map, payAccId));
-        }*/
+        HashMap<String, String> map = Serializer.deserialize(serialized);
+        CreditAccount res;
+        res = migrateToNewPaymentAccount(map, payAccId, bankId);
         return res;
     }
 }

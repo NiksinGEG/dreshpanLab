@@ -26,8 +26,14 @@ public class PaymentAccount extends BaseEntity {
         PaymentAccount res = new PaymentAccount();
         res.id = Integer.parseInt(map.get("id"));
         res.bankName = map.get("bankName");
-        //res.user = User.fromMap(map.get("user"));
-        res.moneyCount = Double.parseDouble(map.get("moneyAmount"));
+
+        res.user = new User();
+        res.user.id =  Integer.parseInt(map.get("userid"));
+        res.user.name = map.get("name");
+        res.user.creditRate = Integer.parseInt(map.get("creditRate"));
+        res.user.workingPlace = map.get("workingPlace");
+
+        res.moneyCount = Double.parseDouble(map.get("moneyCount"));
         return res;
     }
 }

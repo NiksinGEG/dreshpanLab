@@ -74,11 +74,11 @@ public class PaymentAccountServiceImpl implements PaymentAccountService {
         return openPaymentAccount(newPayAcc.user.id, bankId, newPayAcc.moneyCount);
 
     }
-    public Collection<PaymentAccount> migrateFromFile(String source, int bankId) throws Exception {
+    public PaymentAccount migrateFromFile(String source, int bankId) throws Exception {
         String serialized = FileHelper.get(source);
         HashMap<String, String> map = Serializer.deserialize(serialized);
-        LinkedList<PaymentAccount> res = new LinkedList<>();
-        res.add(migrateToBank(map, bankId));
+        PaymentAccount res;
+        res = migrateToBank(map, bankId);
         return res;
     }
 }

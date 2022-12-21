@@ -10,5 +10,5 @@ public interface CreditAccounService {
     CreditAccount addCreditAccount(CreditAccount creditAcc);
     CreditAccount updateCreditAccount(CreditAccount model);
     CreditAccount openCreditAccount(int userId, int bankId, int employeeId, int paymentAccountId, double monthPayment, int months);
-    Collection<CreditAccount> migrateFromFile(String FileName, int payAccId) throws Exception;
+    CreditAccount migrateFromFile(String FileName, int payAccId, int bankId) throws Exception;
 }

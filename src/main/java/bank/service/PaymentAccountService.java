@@ -10,5 +10,5 @@ public interface PaymentAccountService {
     PaymentAccount addPaymentAccount(PaymentAccount paymentAcc);
     PaymentAccount updatePaymentAccount(PaymentAccount model);
     PaymentAccount openPaymentAccount(int userId, int bankId, double initialSumm);
-    Collection<PaymentAccount> migrateFromFile(String fileName, int bankId) throws Exception;
+    PaymentAccount migrateFromFile(String fileName, int bankId) throws Exception;
 }
